@@ -3,6 +3,8 @@ const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const users = require("./routes/api/users")
 const profile = require("./routes/api/profile")
+const passport = require("passport")
+
 const port = process.env.PORT || 5000
 
 const app = express()
@@ -26,13 +28,18 @@ mongoose
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+//
+// ─── PASSPORT MIDDLEWARE ────────────────────────────────────────────────────────
+//
+
+app.use(passport.initialize())
+// Passport Config
+require("./config/passport")(passport)
 //
 // ─── Routes ──────────────────────────────────────────────────────────────────────────
 //
 
-app.get("/", (req, res) => {
-  res.send("Hey from express!!")
-})
 app.use("/api/users", users)
 app.use("/api/profile", profile)
 

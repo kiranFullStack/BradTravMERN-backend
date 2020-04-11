@@ -16,7 +16,19 @@ const UserSchema = new Schema({
   },
   date: {
     type: Date,
-    dafault: Date.now,
+    default: Date.now,
+  },
+  asana: {
+    type: Boolean,
+    default: false,
+  },
+  pranayama: {
+    type: Boolean,
+    default: false,
+  },
+  meditation: {
+    type: Boolean,
+    default: false,
   },
 })
 

@@ -57,6 +57,12 @@ router.post("/register", (req, res) => {
 // @access           PUBLIC
 
 router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body)
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
   const email = req.body.email
   const password = req.body.password
 
@@ -97,6 +103,9 @@ router.get(
       id: req.user.id,
       name: req.user.name,
       email: req.user.email,
+      asana: req.user.asana,
+      pranayama: req.user.pranayama,
+      meditation: req.user.meditation,
     })
   }
 )

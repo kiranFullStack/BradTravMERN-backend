@@ -2,6 +2,8 @@ const express = require("express")
 const router = express.Router()
 const User = require("../../models/User")
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+const keys = require("../../config/keys")
 
 // @route            GET api/users/test
 // @description      Tests Users Route
@@ -55,7 +57,9 @@ router.post("/login", (req, res) => {
     // check password
     bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
-        res.json({ msg: "Success" })
+        // user matched
+        const payload = { id: user.id, name: user.name } //Create JWT Payload
+        jwt.sign(payload)
       } else {
         return res.status(400).json({ password: "Password incorrect" })
       }

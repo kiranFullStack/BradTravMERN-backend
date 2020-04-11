@@ -59,7 +59,14 @@ router.post("/login", (req, res) => {
       if (isMatch) {
         // user matched
         const payload = { id: user.id, name: user.name } //Create JWT Payload
-        jwt.sign(payload)
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 3500 },
+          (err, token) => {
+            res.json({ success: true, token: "Bearer " + token })
+          }
+        )
       } else {
         return res.status(400).json({ password: "Password incorrect" })
       }

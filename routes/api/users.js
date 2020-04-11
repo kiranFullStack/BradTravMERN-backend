@@ -121,4 +121,28 @@ router.get(
     res.send(`Wohoooo ${req.user.name}`)
   }
 )
+
+router.post(
+  "/testing",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.send(`Wohoooo ${req.user.name} Post`)
+  }
+)
+
+//
+// ─── PATCHING THE USER DATA ─────────────────────────────────────────────────────
+//
+
+router.patch(
+  "/testing/:id",
+  passport.authenticate("jwt", { session: false }),
+
+  (req, res) => {
+    User.findByIdAndUpdate(req.params.id, req.body)
+      .then((result) => res.send(result))
+      .catch((err) => console.log(err))
+  }
+)
+
 module.exports = router

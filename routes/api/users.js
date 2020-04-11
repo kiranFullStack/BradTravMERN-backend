@@ -109,4 +109,16 @@ router.get(
     })
   }
 )
+
+//
+// ─── TESTING ────────────────────────────────────────────────────────────────────
+//
+
+router.get(
+  "/testing",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.send(`Wohoooo ${req.user.name}`)
+  }
+)
 module.exports = router
